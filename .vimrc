@@ -2,10 +2,6 @@
 " "   http://www.vim.org/scripts/script.php?script_id=760
 " "   http://amix.dk/vim/vimrc.html
 " "   http://stackoverflow.com/questions/164847/what-is-in-your-vimrc
-"
-" " Catered to the needs and woes of a Tufts University Comp40 student
-" " Contact Marshall @ mmoutenot@gmail.com with questions or comments.
-"
 
 "{{{Auto Commands
 
@@ -16,31 +12,31 @@ set autochdir
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 
 " Restore cursor position to where it was before
-augroup JumpCursorOnEdit
-   au!
-   autocmd BufReadPost *
-            \ if expand("<afile>:p:h") !=? $TEMP |
-            \   if line("'\"") > 1 && line("'\"") <= line("$") |
-            \     let JumpCursorOnEdit_foo = line("'\"") |
-            \     let b:doopenfold = 1 |
-            \     if (foldlevel(JumpCursorOnEdit_foo) > foldlevel(JumpCursorOnEdit_foo - 1)) |
-            \        let JumpCursorOnEdit_foo = JumpCursorOnEdit_foo - 1 |
-            \        let b:doopenfold = 2 |
-            \     endif |
-            \     exe JumpCursorOnEdit_foo |
-            \   endif |
-            \ endif
-   " Need to postpone using "zv" until after reading the modelines.
-   autocmd BufWinEnter *
-            \ if exists("b:doopenfold") |
-            \   exe "normal zv" |
-            \   if(b:doopenfold > 1) |
-            \       exe  "+".1 |
-            \   endif |
-            \   unlet b:doopenfold |
-            \ endif
-augroup END
-
+" augroup JumpCursorOnEdit
+"    au!
+"    autocmd BufReadPost *
+"             \ if expand("<afile>:p:h") !=? $TEMP |
+"             \   if line("'\"") > 1 && line("'\"") <= line("$") |
+"             \     let JumpCursorOnEdit_foo = line("'\"") |
+"             \     let b:doopenfold = 1 |
+"             \     if (foldlevel(JumpCursorOnEdit_foo) > foldlevel(JumpCursorOnEdit_foo - 1)) |
+"             \        let JumpCursorOnEdit_foo = JumpCursorOnEdit_foo - 1 |
+"             \        let b:doopenfold = 2 |
+"             \     endif |
+"             \     exe JumpCursorOnEdit_foo |
+"             \   endif |
+"             \ endif
+"    " Need to postpone using "zv" until after reading the modelines.
+"    autocmd BufWinEnter *
+"             \ if exists("b:doopenfold") |
+"             \   exe "normal zv" |
+"             \   if(b:doopenfold > 1) |
+"             \       exe  "+".1 |
+"             \   endif |
+"             \   unlet b:doopenfold |
+"             \ endif
+" augroup END
+"
 "}}}
 
 "{{{Misc Settings
@@ -52,12 +48,15 @@ set makeprg=./compile
 set nocompatible
 
 " This shows what you are typing as a command at the bottom of the page
-set showcmd
-set cmdheight=2
+" set showcmd
+" set cmdheight=2
 
 " Folding Stuffs
 " I find this one a little annoying sometimes set foldmethod=marker
 set wrap
+
+" show line numbers
+set number
 
 " Syntax Higlighting
 filetype on
@@ -77,10 +76,10 @@ set autoindent
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
 " Change spaces to a tab character
+set smartindent
+set tabstop=2
+set shiftwidth=2
 set expandtab
-set smarttab
-set shiftwidth=4
-set softtabstop=4
 
 " Spell checking (default=false)
 if version >= 700
@@ -124,15 +123,15 @@ syntax enable "Enable syntax hl
 
 " Set font according to system
 " if you're using a mac
-  "set gfn=Menlo:h14
-  "set shell=/bin/bash
+  set gfn=Menlo:h11
+  set shell=/bin/bash
 
 " if you're using windows
   "set gfn=Bitstream\ Vera\ Sans\ Mono:h10
 
 " if you're using linux
-  set gfn=Monospace\ 10
-  set shell=/bin/bash
+"  set gfn=Monospace\ 10
+"  set shell=/bin/bash
 
 syntax enable "Enable syntax h1
 
@@ -234,4 +233,3 @@ map n nzz
 " Swap ; and : (one less keypress)
 nnoremap ; :
 nnoremap : ;
-
